@@ -13,8 +13,15 @@ function refreshWeather(response) {
     temperatureElement.innerHTML = Math.round(temperature);
     timeElement.innerHTML = formatDate(date);
     descriptionElement.innerHTML = response.data.condition.description;
-    humidityElement.innerHTML = `$(response.data.tepmerature.humidity)%`;
-    iconElement.innerHTML = `<img src="$(response.data.condition.icon_url" class="weather-app-icon" />`;
+    humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
+    iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-icon" />`;
+
+    
+    if (response.data.wind && response.data.wind.speed) {
+        windSpeedElement.innerHTML = `${Math.round(response.data.wind.speed)} km/h`;
+    } else {
+        windSpeedElement.innerHTML = "N/A"; 
+    }
   }
 
   function formatDate(date) {
@@ -55,5 +62,5 @@ function refreshWeather(response) {
   let searchFormElement = document.querySelector("#search-form");
   searchFormElement.addEventListener("submit", handleSearchSubmit);
 
-  // By default, show the weather for Paris on page load
+  
   searchCity("Paris");
