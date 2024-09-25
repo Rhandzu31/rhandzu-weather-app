@@ -15,13 +15,7 @@ function refreshWeather(response) {
     descriptionElement.innerHTML = response.data.condition.description;
     humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
     iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-icon" />`;
-
-    
-    if (response.data.wind && response.data.wind.speed) {
-        windSpeedElement.innerHTML = `${Math.round(response.data.wind.speed)} km/h`;
-    } else {
-        windSpeedElement.innerHTML = "N/A"; 
-    }
+    windSpeedElement.innerHTML =`${response.data.wind.speed}km/h`;
   }
 
   function formatDate(date) {
@@ -59,8 +53,31 @@ function refreshWeather(response) {
     searchCity(searchInput.value);
   }
 
+  function displayForecast() {
+    let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
+    let forecastHtml ="";
+
+    days.forEach(function (day) {
+    forecastHtml =
+    forecastHtml +
+    `<div class="weather-forecast-day">
+            <div class="weather-forecast-date">${day}</div>
+            <div class="weather-forecast-icon">🌤️</div>
+            <div class="weather-forecast-temperatures">
+              <div class="weather-forecast-temperature"><strong>15°</strong></div>
+              <div class="weather-forecast-temperature">9°</div>
+            </div>
+          </div>`;
+        });
+
+        let forecastElement = document.querySelector("#forecast");
+        forecastElement.innerHTML = forecastHtml;
+      }
+
+
   let searchFormElement = document.querySelector("#search-form");
   searchFormElement.addEventListener("submit", handleSearchSubmit);
 
   
   searchCity("Paris");
+  + displayForecast();
